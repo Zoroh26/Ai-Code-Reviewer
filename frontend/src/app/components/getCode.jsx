@@ -7,6 +7,8 @@ import Prism from 'prismjs';
 import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import 'prismjs/themes/prism-tomorrow.css';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-python';
@@ -31,7 +33,7 @@ const languageOptions = {
   javascript: 'JavaScript',
   python: 'Python',
   java: 'Java',
-  cpp: 'C++',
+  cpp: 'C/C++',
 };
 
 const languageMap = {
@@ -112,8 +114,11 @@ const GetCode = () => {
         <div className={classes.responseWrapper}>
           {review ? (
             <div className={classes.markdownText}>
-              <ReactMarkdown>{review}</ReactMarkdown>
-            </div>
+  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+    {review}
+  </ReactMarkdown>
+</div>
+
           ) : (
             <div className="text-gray-400">Your AI review will appear here.</div>
           )}
